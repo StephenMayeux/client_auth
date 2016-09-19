@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class Header extends Component {
   renderMenuItems() {
     if (this.props.authenticated) {
       return (
-        <ul className="nav navbar-nav">
-          <li className="nav-item">Log Out</li>
-        </ul>
+        <li className="nav-item">
+          <Link className="nav-link" to="/signout">Sign Out</Link>
+        </li>
       );
     } else {
-      return (
-        <ul className="nav navbar-nav">
-          <li className="nav-item">Sign In</li>
-          <li className="nav-item">Sign Up</li>
-        </ul>
-      );
+      return [
+        <li className="nav-item">
+          <Link className="nav-link" to="/signin">Sign In</Link>
+        </li>,
+        <li className="nav-item">
+          <Link className="nav-link" to="/signup">Sign Up</Link>
+        </li>
+      ];
     }
   }
 
   render() {
     return (
       <nav className="navbar navbar-light">
-        {this.renderMenuItems()}
+        <Link to="/" className="navbar-brand">Redux App</Link>
+        <ul className="nav navbar-nav">
+          {this.renderMenuItems()}
+        </ul>
       </nav>
     );
   }
