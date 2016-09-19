@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
+import * as actions from '../../actions';
 
 class Signin extends Component {
   handleFormSubmit({email, password}) {
-    console.log(this.props);
+    console.log(email, password);
+    this.props.signinUser({ email, password });
   }
 
   render() {
@@ -26,7 +28,9 @@ class Signin extends Component {
   }
 }
 
+// pass in state and actions as 2nd and 3rd arguments
+// now we have access to both as props
 export default reduxForm({
   form: 'signin',
   fields: ['email', 'password']
-})(Signin);
+}, null, actions)(Signin);
