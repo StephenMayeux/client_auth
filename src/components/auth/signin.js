@@ -8,6 +8,16 @@ class Signin extends Component {
     this.props.signinUser({ email, password });
   }
 
+  renderAlert() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+          <strong>Opps!</strong> {this.props.errorMessage}
+        </div>
+      );
+    }
+  }
+
   render() {
 
     const { handleSubmit, fields: { email, password }} = this.props;
@@ -20,17 +30,23 @@ class Signin extends Component {
         </fieldset>
         <fieldset className="form-group">
           <label>Password:</label>
-          <input {...password} className="form-control" />
+          <input {...password} className="form-control" type="password" />
         </fieldset>
+        {this.renderAlert()}
         <button action="submit" className="btn btn-primary">Sign In</button>
       </form>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error }
+}
+
+// very similar to connect function
 // pass in state and actions as 2nd and 3rd arguments
 // now we have access to both as props
 export default reduxForm({
   form: 'signin',
   fields: ['email', 'password']
-}, null, actions)(Signin);
+}, mapStateToProps, actions)(Signin);
