@@ -9,9 +9,14 @@ class Feature extends Component {
 
   render() {
     return (
-      <h3>Super secret feature for users only!</h3>
+      <h3>Super secret feature for users only! {this.props.message}</h3>
+
     );
   }
 }
 
-export default connect(null, actions)(Feature);
+function mapStateToProps(state) {
+  return { message: state.auth.message };
+}
+
+export default connect(mapStateToProps, actions)(Feature);
